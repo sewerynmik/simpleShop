@@ -5,10 +5,10 @@ namespace SimpleShop.Controllers;
 
 public class ProductController : Controller
 {
-    private static List<Product> products = new List<Product>
+    private static List<Products> products = new List<Products>
     {
-        new Product { Id = 1, Name = "Laptop", Price = 3000 },
-        new Product {Id = 2, Name = "Telefon", Price = 4000}
+        new Products { Id = 1, Name = "Laptop", Price = 3000 },
+        new Products {Id = 2, Name = "Telefon", Price = 4000}
     };
     
     // GET

@@ -1,9 +1,28 @@
-﻿@model List<Product>
+﻿@model List<Products>
 
 <h2>Lista Produktów</h2>
-<ul>
-    @foreach (var product in Model)
+
+<table class="table table-striped">
+    <thead>
+
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Price</th>
+    </tr>
+
+    </thead>
+    <tbody>
+    
+    @foreach (var product in @Model)
     {
-        <li>@product.Id @product.Name @product.Price</li>
+        <tr>
+            <td>@product.Id</td>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+        </tr>
     }
-</ul>
+    
+    </tbody>
+
+</table>

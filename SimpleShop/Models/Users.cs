@@ -8,4 +8,6 @@ public class Users
     public char Role { set; get; }
     public string Login { set; get; }
     public string Password { set; get; }
+
+    public List<Orders> Orders { get; set; } = new();
 }

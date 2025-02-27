@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Rejestracja";
+}
+
+<h2>Rejestracja</h2>
+
+<form method="post">
+    <label>Imie:</label>
+    <input type="text" name="name" required/>
+    
+    <label>Nazwisko:</label>
+    <input type="text" name="surname" required/>
+
+    <label>Login:</label>
+    <input type="text" name="login" required/>
+
+    <label>Hasło:</label>
+    <input type="text" name="password" required/>
+
+    <button type="submit">Zarejestruj się</button>
+</form>
+
+<a href="@Url.Action("Login", "Auth")">Masz już konto? Zaloguj się</a>

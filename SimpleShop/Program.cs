@@ -9,6 +9,13 @@ builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddSession();
 builder.Services.AddDistributedMemoryCache();
 
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/Auth/Login";
+        options.LogoutPath = "/Auth/Logout";
+    });
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +35,8 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 app.UseSession();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

@@ -2,16 +2,21 @@
     ViewData["Title"] = "Logowanie";
 }
 
-<h2>Logowanie</h2>
+<div class="container d-flex justify-content-center align-items-center pt-5">
+    <div style="max-width: 18rem;" class="col">
+        <form method="post">
+            <div class="mb-3 row">
+                <label class="form-label">Login</label>
+                <input type="text" name="login" required class="form-control"/>
+            </div>
 
-<form method="post">
-    <label>Login</label>
-    <input type="text" name="login" required />
+            <div class="mb-3 row">
+                <label class="form-label">Hasło</label>
+                <input type="password" class="form-control" name="password" required/>
+            </div>
 
-    <label>Hasło</label>
-    <input type="password" name="password" required />
-
-    <button type="submit">Zaloguj</button>
-</form>
-
-<a href="@Url.Action("Register", "Auth")">Nie masz konta? Zarejestruj się</a>
+            <button type="submit" class="btn btn-primary w-100">Zaloguj</button>
+            <a href="@Url.Action("Register", "Auth")" class="d-block text-center mt-2">Nie masz konta? Zarejestruj się</a>
+        </form>
+    </div>
+</div>

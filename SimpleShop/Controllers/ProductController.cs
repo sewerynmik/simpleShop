@@ -1,19 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SimpleShop.Models;
 
 namespace SimpleShop.Controllers;
 
-public class ProductController : Controller
+public class ProductController(AppDbContext context) : Controller
 {
-    private static List<Products> products = new List<Products>
-    {
-        new Products { Id = 1, Name = "Laptop", Price = 3000 },
-        new Products {Id = 2, Name = "Telefon", Price = 4000}
-    };
+    private readonly AppDbContext _context = context;
     
     // GET
+    [AllowAnonymous]
     public IActionResult Index()
     {
-        return View(products);
+        return View(_context.Products.ToList());
     }
 }

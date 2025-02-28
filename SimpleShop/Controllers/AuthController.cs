@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using SimpleShop.Models;
 
 namespace SimpleShop.Controllers;
@@ -44,25 +46,33 @@ public class AuthController(AppDbContext context) : Controller
     }
 
     [HttpPost]
-    public IActionResult Login(string login, string password)
+    public async Task<IActionResult> Login(string login, string password)
     {
-        var user = _context.Users.SingleOrDefault(u => u.Login == login);
+        var user = _context.Users.SingleOrDefault(u => u.Login == login && u.Password == password);
 
-        if (user == null || user.Password != password)
+        if (user == null)
         {
             ModelState.AddModelError("", "Nieprawidłowy login lub hasło.");
             return View();
         }
-        
-        HttpContext.Session.SetString("UserId", user.Id.ToString());
-        HttpContext.Session.SetString("UserName", user.Name);
+
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Name),
+            new Claim("UserId", user.Id.ToString())
+        };
+
+        var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
+        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+
+        await HttpContext.SignInAsync("Cookies", claimsPrincipal);
 
         return RedirectToAction("Index", "Home");
     }
 
-    public IActionResult Logout()
+    public async Task<IActionResult> Logout()
     {
-        HttpContext.Session.Clear();
+        await HttpContext.SignOutAsync("Cookies");
         return RedirectToAction("Login");
     }
 }

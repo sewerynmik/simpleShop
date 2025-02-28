@@ -16,10 +16,16 @@ public class UserController(AppDbContext context) : Controller
     [Authorize]
     public IActionResult Profile()
     {
-        var userId = User.FindFirst("UserId");
+        var userId = User.FindFirst("UserId")?.Value;
+        
+        Console.Write(userId);
 
         if (userId == null) return RedirectToAction("Index" ,"Home");
+
+        var user = _context.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+
+        if (user == null) return NotFound();
         
-        return View(userId);
+        return View(user);
     }
 }

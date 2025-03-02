@@ -44,10 +44,12 @@ public class UserController(AppDbContext context) : Controller
     }
 
     [Authorize]
-    [HttpPut("{id}")]
-    public IActionResult Edit(int id, [FromBody] Users updatedUser)
+    [HttpPost]
+    public IActionResult Edit(Users updatedUser)
     {
-        var user = _context.Users.Find(id);
+        var userId = User.FindFirst("UserId").Value;
+        
+        var user = _context.Users.Find(int.Parse(userId));
 
         if (user == null) return NotFound();
 

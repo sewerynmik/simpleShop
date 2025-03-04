@@ -31,10 +31,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Shop</a>
                     </li>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
-                    {
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
-                    }
                 </ul>
                 @if (!User.Identity.IsAuthenticated)
                 {
@@ -52,7 +48,7 @@
                 {
                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                         <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-success dropdown-toggle"
+                            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Witaj @User.Identity.Name
                             </button>

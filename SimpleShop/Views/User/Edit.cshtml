@@ -2,23 +2,22 @@
 
 <div class="d-flex justify-content-center align-content-center">
     <div style="width: 300px">
-        <form method="post" asp-area="" asp-action="Edit" asp-controller="User" 
-              class="d-flex flex-column">
+        <form method="post" asp-area="" asp-action="Edit" asp-controller="User">
             <input type="hidden" name="_method" value="PUT"/>
             
-            <p class="form-text mb-0 mt-2">Imie:</p>
+            <p class="form-text">Imie:</p>
             <input type="text" class="form-control" name="Name" value="@Model.Name">
 
-            <p class="form-text mb-0 mt-2">Naziwsko:</p>
+            <p class="form-text">Naziwsko:</p>
             <input type="text" class="form-control" name="Surname" value="@Model.Surname">
 
-            <p class="form-text mb-0 mt-2">Login:</p>
+            <p class="form-text">Login:</p>
             <input type="text" class="form-control" name="Login" value="@Model.Login">
 
-            <p class="form-text mb-0 mt-2">Hasło:</p>
+            <p class="form-text">Hasło:</p>
             <input type="password" class="form-control" name="Password" value="@Model.Password">
 
-            <button type="submit" class="btn btn-primary mt-2 align-self-center">Zapisz zmiany</button>
+            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
         </form>
     </div>
 </div>

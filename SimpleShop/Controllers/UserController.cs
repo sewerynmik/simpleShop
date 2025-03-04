@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SimpleShop.Models;
 
@@ -10,9 +8,6 @@ public class UserController(AppDbContext context) : Controller
 {
     private readonly AppDbContext _context = context;
     // GET
-    [Authorize(Roles = "A")]
-    [Authorize]
-    [HttpGet]
     public IActionResult Index()
     {
         return View(null);
@@ -35,8 +30,6 @@ public class UserController(AppDbContext context) : Controller
     }
 
     [Authorize]
-    [HttpGet]
-    [Route("User/Edit")]
     public IActionResult Edit()
     {
         var userId = User.FindFirst("UserId")?.Value;
@@ -52,8 +45,7 @@ public class UserController(AppDbContext context) : Controller
 
     [Authorize]
     [HttpPost]
-    [Route("User/Edit")]
-    public async Task<IActionResult> Edit(Users updatedUser)
+    public IActionResult Edit(Users updatedUser)
     {
         var userId = User.FindFirst("UserId").Value;
         
@@ -65,20 +57,8 @@ public class UserController(AppDbContext context) : Controller
         user.Surname = updatedUser.Surname;
         user.Login = updatedUser.Login;
         user.Password = updatedUser.Password;
-        
+
         _context.SaveChanges();
-        
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Name),
-            new Claim("UserId", user.Id.ToString())
-        };
-
-        var claimsIdentity = new ClaimsIdentity(claims, "Cookies");
-        var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
-
-        await HttpContext.SignInAsync("Cookies", claimsPrincipal);
-        
         return RedirectToAction("Profile");
     }
 }

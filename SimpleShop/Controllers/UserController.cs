@@ -10,6 +10,9 @@ public class UserController(AppDbContext context) : Controller
 {
     private readonly AppDbContext _context = context;
     // GET
+    [Authorize(Roles = "A")]
+    [Authorize]
+    [HttpGet]
     public IActionResult Index()
     {
         return View(null);

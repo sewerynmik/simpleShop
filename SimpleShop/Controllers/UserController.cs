@@ -8,9 +8,14 @@ public class UserController(AppDbContext context) : Controller
 {
     private readonly AppDbContext _context = context;
     // GET
+    [Authorize(Roles = "A")]
+    [Authorize]
+    [HttpGet]
     public IActionResult Index()
     {
-        return View(null);
+        var users = _context.Users;
+        
+        return View(users.ToList());
     }
 
     [Authorize]
@@ -61,4 +66,12 @@ public class UserController(AppDbContext context) : Controller
         _context.SaveChanges();
         return RedirectToAction("Profile");
     }
+
+    [Authorize]
+    [HttpPost]
+    public IActionResult Delete()
+    {
+        return View();
+    }
+    
 }

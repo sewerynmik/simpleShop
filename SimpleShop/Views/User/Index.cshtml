@@ -1,0 +1,41 @@
+﻿@model List<Users>
+
+<h2>Użytkownicy</h2>
+
+<table class="table table-striped">
+    <thead>
+
+    <tr>
+        <th>#</th>
+        <th>Imie</th>
+        <th>Nazwisko</th>
+        <th>Rola</th>
+        <th>Login</th>
+        <th>Hasło</th>
+        <th></th>
+    </tr>
+
+
+    </thead>
+    <tbody>
+
+    @foreach (var user in @Model)
+    {
+        <tr>
+            <td>@user.Id</td>
+            <td>@user.Name</td>
+            <td>@user.Surname</td>
+            <td>@user.Role</td>
+            <td>@user.Login</td>
+            <td>@user.Password</td>
+
+            <td class="text-end" style="width: 10rem">
+                <a class="btn btn-primary">Edytuj</a>
+                <a class="btn btn-danger">Usuń</a>
+            </td>
+
+        </tr>
+    }
+
+    </tbody>
+</table>

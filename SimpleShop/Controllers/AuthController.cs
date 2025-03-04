@@ -59,7 +59,8 @@ public class AuthController(AppDbContext context) : Controller
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.Name, user.Name),
-            new Claim("UserId", user.Id.ToString())
+            new Claim("UserId", user.Id.ToString()),
+            new Claim(ClaimTypes.Role, user.Role.ToString())
         };
 
         var claimsIdentity = new ClaimsIdentity(claims, "Cookies");

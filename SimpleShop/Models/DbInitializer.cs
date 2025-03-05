@@ -4,8 +4,10 @@ namespace SimpleShop.Models;
 
 public class DbInitializer
 {
-    public static void seed(AppDbContext context)
+    public static void Seed(AppDbContext context)
     {
+        if (context.Users.Any()) return;
+        
         context.Database.EnsureDeleted();
         context.Database.Migrate();
 
@@ -27,6 +29,7 @@ public class DbInitializer
             new Products { Name = "Myszka", Price = 12, ProducerId = 1 },
             new Products { Name = "Monitor", Price = 100, ProducerId = 2 }
         );
+        
         context.SaveChanges();
     }
 }

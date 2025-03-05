@@ -26,11 +26,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-/*using (var scope = app.Services.CreateScope())
+using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    DbInitializer.seed(context);
-}*/
+    DbInitializer.Seed(context);
+}
 
 app.UseHttpsRedirection();
 app.UseRouting();

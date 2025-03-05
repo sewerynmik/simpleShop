@@ -35,6 +35,8 @@ public class UserController(AppDbContext context) : Controller
     }
 
     [Authorize]
+    [HttpGet]
+    [Route("User/EditProfile")]
     public IActionResult Edit()
     {
         var userId = User.FindFirst("UserId")?.Value;
@@ -50,6 +52,7 @@ public class UserController(AppDbContext context) : Controller
 
     [Authorize]
     [HttpPost]
+    [Route("User/EditProfile")]
     public IActionResult Edit(Users updatedUser)
     {
         var userId = User.FindFirst("UserId").Value;
@@ -69,6 +72,7 @@ public class UserController(AppDbContext context) : Controller
 
     [Authorize(Roles = "A")]
     [Authorize]
+    [Route("User/Edit/{id}")]
     public IActionResult Edit(int id)
     {
         var user = _context.Users.FirstOrDefault(u => u.Id == id);
@@ -81,6 +85,7 @@ public class UserController(AppDbContext context) : Controller
     [Authorize(Roles = "A")]
     [Authorize]
     [HttpPost]
+    [Route("User/Edit/{id}")]
     public IActionResult Edit(int id, Users updatedUser)
     {
         var user = _context.Users.FirstOrDefault(u => u.Id == id);

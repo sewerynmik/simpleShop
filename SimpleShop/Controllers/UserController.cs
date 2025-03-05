@@ -79,6 +79,10 @@ public class UserController(AppDbContext context) : Controller
 
         if (user == null) return NotFound();
 
+        var roles = _context.Users.Select(u => u.Role).Distinct().ToList();
+
+        ViewBag.Roles = roles;
+
         return View(user);
     }
 
@@ -106,6 +110,14 @@ public class UserController(AppDbContext context) : Controller
     [Authorize]
     [HttpPost]
     public IActionResult Delete()
+    {
+        return View();
+    }
+
+    [Authorize(Roles = "A")]
+    [Authorize]
+    [HttpGet]
+    public IActionResult Add()
     {
         return View();
     }

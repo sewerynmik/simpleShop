@@ -7,29 +7,51 @@
             
             @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
             {
-                <p>ID:</p>
-                <input type="text" class="form-control" name="Id" value="@Model.Id" disabled>
+                <div class="row mb-3 mt-3">
+                    <p class="form-label">Id:</p>
+                    <input type="text" class="form-control" name="Id" value="@Model.Id" readonly>
+                </div>
+                
             }
             
-            <p class="form-text">Imie:</p>
-            <input type="text" class="form-control" name="Name" value="@Model.Name">
+            <div class="row mb-3">
+                <p class="form-label">Imie:</p>
+                <input type="text" class="form-control" name="Name" value="@Model.Name">
+            </div>
+            
 
-            <p class="form-text">Naziwsko:</p>
-            <input type="text" class="form-control" name="Surname" value="@Model.Surname">
+            <div class="row mb-3">
+                <p class="form-label">Naziwsko:</p>
+                <input type="text" class="form-control" name="Surname" value="@Model.Surname">
+            </div>
+            
             
             @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
             {
-                <p class="form-text">Rola:</p>
-                <input type="text" class="form-control" name="Role" value="@Model.Role">
+                <div class="row mb-3">
+                    <p class="form-label">Rola:</p>
+                    <select name="Role" class="form-select">
+                        @foreach (var role in ViewBag.Roles)
+                        {
+                            <option value="@role" selected="@(role == Model.Role ? "selected" : null)">@role</option>
+                        }
+                    </select>
+                </div>
             }
 
-            <p class="form-text">Login:</p>
-            <input type="text" class="form-control" name="Login" value="@Model.Login">
+            <div class="row mb-3">
+                <p class="form-label">Login:</p>
+                <input type="text" class="form-control" name="Login" value="@Model.Login"> 
+            </div>
+            
  
-            <p class="form-text">Hasło:</p>
-            <input type="password" class="form-control" name="Password" value="@Model.Password">
+            <div class="row mb-3">
+                <p class="form-label">Hasło:</p>
+                <input type="password" class="form-control" name="Password" value="@Model.Password">
+            </div>
+            
 
-            <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+            <button type="submit" class="btn btn-primary w-100">Zapisz zmiany</button>
         </form>
     </div>
 </div>

@@ -67,6 +67,37 @@ public class UserController(AppDbContext context) : Controller
         return RedirectToAction("Profile");
     }
 
+    [Authorize(Roles = "A")]
+    [Authorize]
+    public IActionResult Edit(int id)
+    {
+        var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+        if (user == null) return NotFound();
+
+        return View(user);
+    }
+
+    [Authorize(Roles = "A")]
+    [Authorize]
+    [HttpPost]
+    public IActionResult Edit(int id, Users updatedUser)
+    {
+        var user = _context.Users.FirstOrDefault(u => u.Id == id);
+
+        if (user == null) return NotFound();
+        
+        user.Name = updatedUser.Name;
+        user.Surname = updatedUser.Surname;
+        user.Login = updatedUser.Login;
+        user.Password = updatedUser.Password;
+        user.Role = updatedUser.Role;
+
+        context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
+
     [Authorize]
     [HttpPost]
     public IActionResult Delete()

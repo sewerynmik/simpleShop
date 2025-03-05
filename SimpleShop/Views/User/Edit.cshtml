@@ -5,15 +5,27 @@
         <form method="post" asp-area="" asp-action="Edit" asp-controller="User">
             <input type="hidden" name="_method" value="PUT"/>
             
+            @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
+            {
+                <p>ID:</p>
+                <input type="text" class="form-control" name="Id" value="@Model.Id" disabled>
+            }
+            
             <p class="form-text">Imie:</p>
             <input type="text" class="form-control" name="Name" value="@Model.Name">
 
             <p class="form-text">Naziwsko:</p>
             <input type="text" class="form-control" name="Surname" value="@Model.Surname">
+            
+            @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
+            {
+                <p class="form-text">Rola:</p>
+                <input type="text" class="form-control" name="Role" value="@Model.Role">
+            }
 
             <p class="form-text">Login:</p>
             <input type="text" class="form-control" name="Login" value="@Model.Login">
-
+ 
             <p class="form-text">Hasło:</p>
             <input type="password" class="form-control" name="Password" value="@Model.Password">
 

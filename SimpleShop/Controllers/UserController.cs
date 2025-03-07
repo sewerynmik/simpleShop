@@ -109,9 +109,16 @@ public class UserController(AppDbContext context) : Controller
 
     [Authorize]
     [HttpPost]
-    public IActionResult Delete()
+    public IActionResult Delete(int userId)
     {
-        return View();
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+
+        if (user == null) return NotFound();
+
+        _context.Remove(user);
+        _context.SaveChanges();
+        
+        return RedirectToAction("Index");
     }
 
     [Authorize(Roles = "A")]
@@ -119,7 +126,24 @@ public class UserController(AppDbContext context) : Controller
     [HttpGet]
     public IActionResult Add()
     {
+        var roles = _context.Users.Select(u => u.Role).Distinct().ToList();
+
+        ViewBag.Roles = roles;
+        
         return View();
+    }
+
+    [Authorize(Roles = "A")]
+    [Authorize]
+    [HttpPost]
+    public IActionResult Add(Users user)
+    {
+        var u = user;
+
+        _context.Add(u);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
     }
     
 }

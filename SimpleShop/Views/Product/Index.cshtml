@@ -2,7 +2,10 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4 p-3">
     <h2 class="mb-0">Lista Produktów</h2>
-    <a asp-area="" asp-controller="Product" asp-action="Add" class="btn btn-success px-4">Dodaj</a>
+    @if (User.Identity!.IsAuthenticated && User.IsInRole("A"))
+    {
+        <a asp-area="" asp-controller="Product" asp-action="Add" class="btn btn-success px-4">Dodaj</a>
+    }
 </div>
 
 <table class="table table-striped">
@@ -13,12 +16,15 @@
         <th>Name</th>
         <th>Price</th>
         <th>Producer</th>
-        <th></th>
+        @if (User.Identity!.IsAuthenticated && User.IsInRole("A"))
+        {
+            <th></th>
+        }
     </tr>
 
     </thead>
     <tbody>
-    
+
     @foreach (var product in @Model)
     {
         <tr>
@@ -26,16 +32,22 @@
             <td>@product.Name</td>
             <td>@product.Price</td>
             <td>@product.Producer.Name</td>
-            <td class="text-end" style="width: 10rem">
-                <a class="btn btn-primary" asp-area="" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id">Edytuj</a>
-                <form method="post" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id" class="d-inline">
-                    @Html.AntiForgeryToken()
-                    <button type="submit" class="btn btn-danger">Usuń</button>
-                </form>
-            </td>
+
+            @if (User.Identity!.IsAuthenticated && User.IsInRole("A"))
+            {
+                <td class="text-end" style="width: 10rem">
+                    <a class="btn btn-primary" asp-area="" asp-controller="Product" asp-action="Edit"
+                       asp-route-id="@product.Id">Edytuj</a>
+                    <form method="post" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id"
+                          class="d-inline">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger">Usuń</button>
+                    </form>
+                </td>
+            }
         </tr>
     }
-    
+
     </tbody>
 
 </table>

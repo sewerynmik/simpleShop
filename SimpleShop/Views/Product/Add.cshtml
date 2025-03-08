@@ -1,0 +1,37 @@
+﻿@{
+    
+}
+
+<div class="d-flex justify-content-center align-content-center">
+    <div style="width: 300px">
+        <form method="post" asp-area="" asp-action="Add" asp-controller="Product">
+
+            <div class="row mb-3">
+                <p class="form-label">Nazwa:</p>
+                <input type="text" class="form-control" name="Name">
+            </div>
+
+
+            <div class="row mb-3">
+                <p class="form-label">Cena:</p>
+                <input type="text" class="form-control" name="Price">
+            </div>
+
+
+            <div class="row mb-3">
+                <p class="form-label">Producent:</p>
+                <select name="ProducerId" class="form-select">
+                    @foreach (var producer in ViewBag.Producers)
+                    {
+                        <option value="@producer.Id">
+                            @producer.Name
+                        </option>
+                    }
+                </select>
+            </div>
+
+            
+            <button type="submit" class="btn btn-primary w-100">Zapisz zmiany</button>
+        </form>
+    </div>
+</div>

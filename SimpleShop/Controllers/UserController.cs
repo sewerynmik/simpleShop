@@ -6,16 +6,14 @@ namespace SimpleShop.Controllers;
 
 public class UserController(AppDbContext context) : Controller
 {
-    private readonly AppDbContext _context = context;
     // GET
     [Authorize(Roles = "A")]
-    [Authorize]
     [HttpGet]
     public IActionResult Index()
     {
-        var users = _context.Users;
+        var users = context.Users.ToList();
         
-        return View(users.ToList());
+        return View(users);
     }
 
     [Authorize]
@@ -27,7 +25,7 @@ public class UserController(AppDbContext context) : Controller
 
         if (userId == null) return RedirectToAction("Index" ,"Home");
 
-        var user = _context.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+        var user = context.Users.FirstOrDefault(u => u.Id.ToString() == userId);
 
         if (user == null) return NotFound();
         
@@ -43,7 +41,7 @@ public class UserController(AppDbContext context) : Controller
 
         if (userId == null) return RedirectToAction("Index", "Home");
 
-        var user = _context.Users.FirstOrDefault(u => u.Id.ToString() == userId);
+        var user = context.Users.FirstOrDefault(u => u.Id.ToString() == userId);
 
         if (user == null) return NotFound();
 
@@ -57,7 +55,7 @@ public class UserController(AppDbContext context) : Controller
     {
         var userId = User.FindFirst("UserId").Value;
         
-        var user = _context.Users.Find(int.Parse(userId));
+        var user = context.Users.Find(int.Parse(userId));
 
         if (user == null) return NotFound();
 
@@ -66,20 +64,19 @@ public class UserController(AppDbContext context) : Controller
         user.Login = updatedUser.Login;
         user.Password = updatedUser.Password;
 
-        _context.SaveChanges();
+        context.SaveChanges();
         return RedirectToAction("Profile");
     }
 
     [Authorize(Roles = "A")]
-    [Authorize]
     [Route("User/Edit/{id}")]
     public IActionResult Edit(int id)
     {
-        var user = _context.Users.FirstOrDefault(u => u.Id == id);
+        var user = context.Users.FirstOrDefault(u => u.Id == id);
 
         if (user == null) return NotFound();
 
-        var roles = _context.Users.Select(u => u.Role).Distinct().ToList();
+        var roles = context.Users.Select(u => u.Role).Distinct().ToList();
 
         ViewBag.Roles = roles;
 
@@ -87,12 +84,11 @@ public class UserController(AppDbContext context) : Controller
     }
 
     [Authorize(Roles = "A")]
-    [Authorize]
     [HttpPost]
     [Route("User/Edit/{id}")]
     public IActionResult Edit(int id, Users updatedUser)
     {
-        var user = _context.Users.FirstOrDefault(u => u.Id == id);
+        var user = context.Users.FirstOrDefault(u => u.Id == id);
 
         if (user == null) return NotFound();
         
@@ -111,22 +107,21 @@ public class UserController(AppDbContext context) : Controller
     [HttpPost]
     public IActionResult Delete(int userId)
     {
-        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+        var user = context.Users.FirstOrDefault(u => u.Id == userId);
 
         if (user == null) return NotFound();
 
-        _context.Remove(user);
-        _context.SaveChanges();
+        context.Remove(user);
+        context.SaveChanges();
         
         return RedirectToAction("Index");
     }
 
     [Authorize(Roles = "A")]
-    [Authorize]
     [HttpGet]
     public IActionResult Add()
     {
-        var roles = _context.Users.Select(u => u.Role).Distinct().ToList();
+        var roles = context.Users.Select(u => u.Role).Distinct().ToList();
 
         ViewBag.Roles = roles;
         
@@ -134,16 +129,14 @@ public class UserController(AppDbContext context) : Controller
     }
 
     [Authorize(Roles = "A")]
-    [Authorize]
     [HttpPost]
     public IActionResult Add(Users user)
     {
         var u = user;
 
-        _context.Add(u);
-        _context.SaveChanges();
+        context.Add(u);
+        context.SaveChanges();
 
         return RedirectToAction("Index");
     }
-    
 }

@@ -7,8 +7,6 @@ namespace SimpleShop.Controllers;
 
 public class AuthController(AppDbContext context) : Controller
 {
-    private readonly AppDbContext _context = context;
-
     [HttpGet]
     public IActionResult Register()
     {
@@ -18,7 +16,7 @@ public class AuthController(AppDbContext context) : Controller
     [HttpPost]
     public IActionResult Register(string name, string surname, string login, string password)
     {
-        if (_context.Users.Any(u=> u.Login == login))
+        if (context.Users.Any(u=> u.Login == login))
         {
             ModelState.AddModelError("","Użytkownik o tym loginie już istnieje");
             return View();
@@ -33,8 +31,8 @@ public class AuthController(AppDbContext context) : Controller
             Password = password
         };
 
-        _context.Users.Add(user);
-        _context.SaveChanges();
+        context.Users.Add(user);
+        context.SaveChanges();
         
         return RedirectToAction("Login");
     }
@@ -48,7 +46,7 @@ public class AuthController(AppDbContext context) : Controller
     [HttpPost]
     public async Task<IActionResult> Login(string login, string password)
     {
-        var user = _context.Users.SingleOrDefault(u => u.Login == login && u.Password == password);
+        var user = context.Users.SingleOrDefault(u => u.Login == login && u.Password == password);
 
         if (user == null)
         {

@@ -2,10 +2,10 @@
 
 <div class="d-flex justify-content-center align-content-center">
     <div style="width: 300px">
-        <form method="post" asp-area="" asp-action="Edit" asp-controller="User">
+        <form method="post" asp-controller="User" asp-action="Edit">
             <input type="hidden" name="_method" value="PUT"/>
             
-            @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
+            @if (User.Identity!.IsAuthenticated && User.IsInRole("A"))
             {
                 <div class="row mb-3 mt-3">
                     <p class="form-label">Id:</p>

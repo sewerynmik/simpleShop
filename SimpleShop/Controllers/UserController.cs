@@ -20,8 +20,6 @@ public class UserController(AppDbContext context) : Controller
     public IActionResult Profile()
     {
         var userId = User.FindFirst("UserId")?.Value;
-        
-        Console.Write(userId);
 
         if (userId == null) return RedirectToAction("Index" ,"Home");
 
@@ -53,7 +51,9 @@ public class UserController(AppDbContext context) : Controller
     [Route("User/EditProfile")]
     public IActionResult Edit(Users updatedUser)
     {
-        var userId = User.FindFirst("UserId").Value;
+        var userId = User.FindFirst("UserId")?.Value;
+
+        if (userId == null) return NotFound();
         
         var user = context.Users.Find(int.Parse(userId));
 

@@ -2,7 +2,7 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4 p-3">
     <h2 class="mb-0">Użytkownicy</h2>
-    <a asp-area="" asp-controller="User" asp-action="Add" class="btn btn-success px-4">Dodaj</a>
+    <a asp-controller="User" asp-action="Add" class="btn btn-success px-4">Dodaj</a>
 </div>
 
 
@@ -36,8 +36,8 @@
             <td>@user.Password</td>
 
             <td class="text-end" style="width: 10rem">
-                <a class="btn btn-primary me-2" asp-area="" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">Edytuj</a>
-                <form method="post" asp-area="" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id" class="d-inline">
+                <a class="btn btn-primary me-2" asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">Edytuj</a>
+                <form method="post" asp-controller="User" asp-action="Delete" asp-route-userId="@user.Id" class="d-inline">
                     @Html.AntiForgeryToken()
                     <button type="submit" class="btn btn-danger">Usuń</button>
                 </form>

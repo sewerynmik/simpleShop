@@ -5,7 +5,7 @@
         <form method="post" asp-controller="User" asp-action="Edit">
             <input type="hidden" name="_method" value="PUT"/>
             
-            @if (User.Identity!.IsAuthenticated && User.IsInRole("A"))
+            @if (User.Identity is { IsAuthenticated: true } && User.IsInRole("A"))
             {
                 <div class="row mb-3 mt-3">
                     <p class="form-label">Id:</p>
@@ -26,7 +26,7 @@
             </div>
             
             
-            @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
+            @if (User.Identity is { IsAuthenticated: true } && User.IsInRole("A"))
             {
                 <div class="row mb-3">
                     <p class="form-label">Rola:</p>

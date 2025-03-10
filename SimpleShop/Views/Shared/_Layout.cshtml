@@ -14,7 +14,7 @@
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SimpleShop</a>
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">SimpleShop</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -23,28 +23,28 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Index">Shop</a>
+                        <a class="nav-link text-dark" asp-controller="Product" asp-action="Index">Shop</a>
                     </li>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("A"))
+                    @if (User.Identity is { IsAuthenticated: true } && User.IsInRole("A"))
                     {
-                        <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Users</a>
+                        <a class="nav-link text-dark" asp-controller="User" asp-action="Index">Users</a>
                     }
                 </ul>
-                @if (!User.Identity.IsAuthenticated)
+                @if (User.Identity is { IsAuthenticated: false })
                 {
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth"
+                            <a class="nav-link text-dark" asp-controller="Auth"
                                asp-action="Login">Zaloguj</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Auth" asp-action="Register">Rejestracja</a>
+                            <a class="nav-link text-dark" asp-controller="Auth" asp-action="Register">Rejestracja</a>
                         </li>
                     </ul>
                 }
@@ -54,14 +54,14 @@
                         <div class="btn-group" role="group">
                             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Witaj @User.Identity.Name
+                                Witaj @User.Identity?.Name
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="btnGroupDrop1">
-                                <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Profile">Profil</a>
-                                <a class="dropdown-item" href="#">Koszyk</a>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Profile">Profil</a>
+                                <a class="dropdown-item" asp-controller="Cart" asp-action="Index">Koszyk</a>
                                 <a class="dropdown-item" href="#">Historia zakupów</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="User" asp-action="Edit">Opcje</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Auth" asp-action="Logout">Wyloguj</a>
+                                <a class="dropdown-item" asp-controller="User" asp-action="Edit">Opcje</a>
+                                <a class="dropdown-item" asp-controller="Auth" asp-action="Logout">Wyloguj</a>
                             </div>
                         </div>
                     </div>

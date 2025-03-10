@@ -1,0 +1,44 @@
+﻿@model List<CartItem>
+
+
+<h2>Koszyk</h2>
+
+@if (Model.Any())
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nazwa</th>
+            <th>Cena</th>
+            <th>Ilość</th>
+            <th>Suma</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        @foreach (var item in @Model)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@(item.Quantity * item.Price) zł</td>
+
+                <td class="text-end" style="width: 6rem">
+                    <a class="btn btn-danger" asp-controller="Cart" asp-action="DeleteFromCart" asp-route-productId="@item.ProductId">Usuń</a>
+                </td>
+            </tr>
+        }
+
+        </tbody>
+    </table>
+    
+    <a class="btn btn-danger" asp-controller="Cart" asp-action="ClearCart">Wyczyść koszyk</a>
+}
+else
+{
+    <p>Koszyk pusty.</p>
+}
+

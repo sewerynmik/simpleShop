@@ -1,0 +1,28 @@
+﻿@model List<Orders>
+
+<h2>Zamówienia</h2>
+
+@if (Model.Any())
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Numer zamówienia</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.OrderNumber</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Brak zamówień</p>
+}
+

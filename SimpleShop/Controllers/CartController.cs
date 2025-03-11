@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SimpleShop.Extensions;
 using SimpleShop.Models;
 
@@ -6,12 +7,14 @@ namespace SimpleShop.Controllers;
 
 public class CartController(AppDbContext context) : Controller
 {
+    [Authorize]
     public IActionResult Index()
     {
         var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart") ?? new List<CartItem>();
         return View(cart);
     }
 
+    [Authorize]
     public IActionResult AddToCart(int productId)
     {
         var product = context.Products.FirstOrDefault(p => p.Id == productId);
@@ -39,6 +42,7 @@ public class CartController(AppDbContext context) : Controller
         return RedirectToAction("Index");
     }
 
+    [Authorize]
     public IActionResult DeleteFromCart(int productId)
     {
         var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart");
@@ -54,6 +58,7 @@ public class CartController(AppDbContext context) : Controller
         return RedirectToAction("Index");
     }
 
+    [Authorize]
     public IActionResult ClearCart()
     {
         HttpContext.Session.Remove("Cart");

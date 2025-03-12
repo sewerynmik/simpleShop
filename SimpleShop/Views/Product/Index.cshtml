@@ -45,10 +45,10 @@
                     </form>
                 </td>
             }
-            @if (User.Identity.IsAuthenticated)
+            @if (User.Identity.IsAuthenticated && User.IsInRole("U"))
             {
                 <td class="text-end" style="width: 6rem">
-                    <a class="btn btn-danger" asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.Id">Dodaj</a>
+                    <a class="btn btn-success" asp-controller="Cart" asp-action="AddToCart" asp-route-productId="@product.Id">Dodaj</a>
                 </td>
             }
         </tr>

@@ -44,6 +44,7 @@ public class OrderController(AppDbContext context) : Controller
     {
         var order = context.Orders
             .Include(o => o.OrdersProducts)
+            .ThenInclude(op => op.Products)
             .FirstOrDefault(o => o.Id == id);
 
         if (order == null) return NotFound();

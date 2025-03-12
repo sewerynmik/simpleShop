@@ -42,6 +42,10 @@ public class UserController(AppDbContext context) : Controller
         var user = context.Users.FirstOrDefault(u => u.Id.ToString() == userId);
 
         if (user == null) return NotFound();
+        
+        var roles = context.Users.Select(u => u.Role).Distinct().ToList();
+        
+        ViewBag.Roles = roles;
 
         return View(user);
     }

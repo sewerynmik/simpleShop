@@ -30,7 +30,7 @@
                     <td>@item.User.Surname</td>
                 }
                 <td>
-                    <a class="btn btn-success" asp-controller="Order" asp-action="Show">Zobacz</a>
+                    <a class="btn btn-success" asp-controller="Order" asp-action="Show" asp-route-id="@item.Id">Zobacz</a>
                 </td>
             </tr>
         }

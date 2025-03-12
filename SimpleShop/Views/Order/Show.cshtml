@@ -1,2 +1,30 @@
 ﻿@model Orders
 
+<h2>Zamówienie nr. @Model.OrderNumber</h2>
+
+<p>Przedmioty</p>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Cena</th>
+            <th>Liczba</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+    
+    @foreach (var item in Model.OrdersProducts)
+    {
+        <tr>
+            <td>@item.Products.Name</td>
+            <td>@item.Products.Price</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+    
+    </tbody>
+</table>
+

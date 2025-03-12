@@ -4,10 +4,17 @@
 
 @if (Model.Any())
 {
-    <table>
+    <table class="table table-striped">
         <thead>
         <tr>
             <th>Numer zamówienia</th>
+            @if (User.IsInRole("A"))
+            {
+                <th>Id użytkownika</th>
+                <th>Imie</th>
+                <th>Nazwisko</th>
+            }
+            <th></th>
         </tr>
         </thead>
         
@@ -16,6 +23,15 @@
         {
             <tr>
                 <td>@item.OrderNumber</td>
+                @if (User.IsInRole("A"))
+                {
+                    <td>@item.User.Id</td>
+                    <td>@item.User.Name</td>
+                    <td>@item.User.Surname</td>
+                }
+                <td>
+                    <a class="btn btn-success" asp-controller="Order" asp-action="Show">Zobacz</a>
+                </td>
             </tr>
         }
         </tbody>

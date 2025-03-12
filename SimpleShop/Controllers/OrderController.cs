@@ -10,27 +10,33 @@ public class OrderController(AppDbContext context) : Controller
 {
     [Authorize]
     [HttpGet]
-    [Route("Orders")]
-    public IActionResult Index(int id)
-    {
-        var orders = context.Orders
-            .Where(o => o.UserId == id)
-            .Include(o => o.OrdersProducts)
-            .ToList();
-
-        return View(orders);
-    }
-
-    [Authorize(Roles = "A")]
-    [HttpGet]
+    [Route("/Orders")]
     public IActionResult Index()
     {
-        var orders = context.Orders
-            .Include(o => o.OrderNumber)
-            .ToList();
+        var userId = User.FindFirst("UserId")?.Value;
+
+        if (userId == null) return NotFound();
+
+        List<Orders> orders;
+        
+        if (User.IsInRole("A"))
+        {
+            orders = context.Orders
+                .Include(o => o.OrdersProducts)
+                .Include(o => o.User)
+                .ToList();
+        }
+        else
+        {
+            orders = context.Orders
+                .Where(o => o.UserId == int.Parse(userId))
+                .Include(o => o.OrdersProducts)
+                .ToList();
+        }
 
         return View(orders);
     }
+
 
     [Authorize]
     [HttpGet]
@@ -52,21 +58,26 @@ public class OrderController(AppDbContext context) : Controller
         var userId = User.FindFirst("UserId")?.Value;
 
         if (userId == null) return NotFound();
-        
+
         var cart = HttpContext.Session.GetObject<List<CartItem>>("Cart");
 
         if (!cart.Any()) return NotFound();
 
-        var order = new Orders();
+        var order = new Orders
+        {
+            UserId = int.Parse(userId)
+        };
+
+        context.Add(order);
+        context.SaveChanges();
 
         order.OrderNumber = order.Id + 1000;
-        order.UserId = int.Parse(userId);
 
-        var ordersList = new List<OrdersProducts>();
+        var ordersProducts = new List<OrdersProducts>();
 
         foreach (var item in cart)
         {
-            ordersList.Add(
+            ordersProducts.Add(
                 new OrdersProducts
                 {
                     OrderId = order.Id,
@@ -75,10 +86,11 @@ public class OrderController(AppDbContext context) : Controller
                 });
         }
 
-        context.Add(order);
-        context.Add(ordersList);
+        context.AddRange(ordersProducts);
         context.SaveChanges();
-        
+
+        HttpContext.Session.Remove("Cart");
+
         return RedirectToAction("Index");
     }
 }

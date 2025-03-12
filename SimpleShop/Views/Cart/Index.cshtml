@@ -36,7 +36,11 @@
     </table>
     
     <a class="btn btn-danger" asp-controller="Cart" asp-action="ClearCart">Wyczyść koszyk</a>
-    <a class="btn btn-primary" asp-controller="Order" asp-action="Add">Zapłać</a>
+    <form method="post" asp-controller="Order" asp-action="Add" class="d-inline">
+        <button class="btn btn-primary" type="submit">Zapłać</button>
+    </form>
+    
+    //<a class="btn btn-primary" asp-controller="Order" asp-action="Add">Zapłać</a>
 }
 else
 {
